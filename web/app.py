@@ -20,8 +20,9 @@ def analyzer():
     client = Elasticsearch('elasticsearch:9200')
 
     query = request.args.get('q')
+    pprint(query)
     query_vector = bc.encode([query])[0]
-
+    
     script_query = {
         "script_score": {
             "query": {"match_all": {}},
@@ -40,7 +41,7 @@ def analyzer():
             "_source": {"includes": ["title", "text"]}
         }
     )
-    print(query)
+    pprint(script_query)
     pprint(response)
     return jsonify(response)
 
